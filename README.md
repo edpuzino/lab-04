@@ -1,6 +1,13 @@
 ![CF](http://i.imgur.com/7v5ASc8.png) LAB: Buffers - Bitmap Transformer
 =======================================================================
 
+# SO FAR THIS IS WHAT I HAVE
+* I have two functions working, greyscale and negative. By putting in the lines listed below into the command line the individual functions are called and ran. The problem OI think I am having so far is getting the picture put back together before sending ity to the new file. So I am getting two seperate and distinct scrambled pictures to render. The greyscale is supposed to give back a black and white version of the original picture. The negative is supposed to give back a negative of the original picture.
+
+* Enter either of the following lines on the command line to generate the new file with a converted picture in it.
+For greyscale enter: node index.js assets/baldy.bmp greyscale
+For Inverse enter: node index.js assets/baldy.bmp negative
+
 ## Submission Instructions
 * Follow the core submission instructions
 

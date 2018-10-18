@@ -1,0 +1,26 @@
+{
+  "name": "lab-04",
+  "version": "1.0.0",
+  "description": "![CF](http://i.imgur.com/7v5ASc8.png) LAB: Buffers - Bitmap Transformer\r =======================================================================",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint **/*.js",
+    "test": "jest --verbose --coverage",
+    "test-watch": "jest --verbose --coverage --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edpuzino/lab-04.git"
+  },
+  "author": "Ed Puzino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edpuzino/lab-04/issues"
+  },
+  "homepage": "https://github.com/edpuzino/lab-04#readme",
+  "dependencies": {
+    "eslint": "^5.7.0",
+    "jest": "^23.6.0"
+  }
+}

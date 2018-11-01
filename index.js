@@ -66,17 +66,20 @@ const transformGreyscale = (bmp) => {
   bitmap.newFile = bitmap.file.replace(/\.bmp/, `.${operation}.bmp`);
   console.log('Transforming bitmap into greyscale', bmp);
 
-  let pictureData = bitmap.rawPixels;
+  let pictureData = bitmap.buffer;
   console.log(pictureData.length);
   console.log(pictureData[1275]);
 
   //greyscale picture
-  for(let i = 0; i < pictureData.length ; i += 3)  {      
+  for(let i = 0; i < pictureData.length ; i += 8)  {      
     let avg = (pictureData[i] + pictureData[i+1] + pictureData[i+2])/3;
     pictureData[i] = avg;
     pictureData[i+1] = avg;
     pictureData[i+2] = avg;
   }
+
+ // for(let i = 0; i < pictureData.length; i += 3);
+  //pictureData[i] = 
 
   console.log(pictureData[1275]);
   let newPic = bitmap.headers + pictureData;
@@ -98,9 +101,10 @@ const transformNegative = (bmp) => {
   bitmap.newFile = bitmap.file.replace(/\.bmp/, `.${operation}.bmp`);
   console.log('Transforming bitmap into an inverse color image', bmp);
 
-  let pictureData = bitmap.rawPixels;
+  let pictureData = bitmap.buffer;
   console.log(pictureData.length);
   console.log(pictureData[1275]);
+
 
   for(let i = 0; i < 125; i++) {
     for(let j = 0; j < 112; j++){

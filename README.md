@@ -2,27 +2,17 @@
 =======================================================================
 
 # SO FAR THIS IS WHAT I HAVE
-* I have two functions working, greyscale and negative. By putting in the lines listed below into the command line the individual functions are called and ran. The problem OI think I am having so far is getting the picture put back together before sending ity to the new file. So I am getting two seperate and distinct scrambled pictures to render. The greyscale is supposed to give back a black and white version of the original picture. The negative is supposed to give back a negative of the original picture.
+* I have two functions working, greyscale and negative. By putting in the lines listed below into the command line the individual functions are called and ran. The problem I think I am having so far is getting the picture put back together before sending it to the new file. So I am getting two seperate and distinct scrambled pictures to render. The greyscale is supposed to give back a black and white version of the original picture. The negative is supposed to give back a negative of the original picture.
 
 * Enter either of the following lines on the command line to generate the new file with a converted picture in it.
 For greyscale enter: node index.js assets/baldy.bmp greyscale
 For Inverse enter: node index.js assets/baldy.bmp negative
 
-## Submission Instructions
-* Follow the core submission instructions
-
-### Before you begin
-* You'll need to initialize this lab folder as a new node module, install your dependencies, setup your npm script commands, and pull in your config files
 
 ## Resources  
 * [Bitmap Specification](https://en.wikipedia.org/wiki/BMP_file_format)
 * [Buffer Docs](https://nodejs.org/api/buffer.html)
 
-
-## Feature Tasks
-For this assignment you will be building a bitmap (`.bmp`) transformer CLI. It will read a bitmap in from disk, run one or more color or raster transforms and then write it out to a new file. This project will require the use of node buffers in order to manipulate binary data. Your solution should be composed of small tested modules that solve specific problems. Your modules should be thoughfuly named and well documented. The entry point to your CLI should be an index.js file in the root of your package, and all helper modules should be placed in your lib/ directory. Your bitmap transformer modules should not use any third party libraries.
-
-**Assignment 1: Do this will callbacks**
 
 **Assignment 2: Modularize the code**
   * What should be unique, testable modules?
@@ -41,7 +31,7 @@ For this assignment you will be building a bitmap (`.bmp`) transformer CLI. It w
 ## Testing 
 * Use BDD `describe` and `test` methods to define discriptive tests and increase readablity
 * Each `test` callback should aim to test a small well defined feature of a function
-* Write tests to ensure each function behaves correctly with valid and invalud inputs
+* Write tests to ensure each function behaves correctly with valid and invalid inputs
 * The CLI should be tested without using `child_process` or any equivilant third party librarys
 
 ##  Documentation
@@ -61,7 +51,7 @@ You will want to define a strategy for solving the problem before you begin to c
 ## Starter Code
 You've been provided with starter code that implements the basic wiring of the above strategy.
 * The index.js file reads the file and creates a bitmap instance that can `parse()` and `transform()`
-* The parsing ahas been left to you
+* The parsing has been left to you
 * A sample (yet non-functional) transformation has been provided.
 * No tests have been written, you'll need to implement those
 

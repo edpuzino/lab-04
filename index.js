@@ -1,7 +1,9 @@
 'use strict';
 
 const fs = require('fs');
-const greyScale = require('./lib/greyscale.js');
+//const greyScale = require('./lib/greyscale.js');
+const transformJaundice = require('./lib/jaundice.js');
+const transformStarTrek = require('./lib/starTrek.js');
 
 
 /**
@@ -19,7 +21,7 @@ function Bitmap(filePath) {
  * @param buffer
  */
 Bitmap.prototype.parse = function(buffer) {
-  this.buffer = Buffer.from(buffer);
+  
   this.type = buffer.toString('utf-8', 0, 2);
   console.log('type', this.type);
   this.fileSize = buffer.readInt32LE(2); //read 32 bytes skipping the first two
@@ -30,6 +32,7 @@ Bitmap.prototype.parse = function(buffer) {
   console.log('height', this.height);
   this.width = buffer.readInt32LE(18);
   console.log('width', this.width);
+  this.buffer = Buffer.from(buffer, this.width, this.height);
   this.numberColors = buffer.readInt32LE(46);
   console.log('number of colors', this.numberColors);
   this.impColors = buffer.readInt32LE(50);
@@ -47,11 +50,6 @@ Bitmap.prototype.parse = function(buffer) {
 Bitmap.prototype.transform = function(operation) {
   transforms[operation](this);
   //this.newFile = this.file.replace(/\.bmp/, `.${operation}.bmp`);
-
-
-
-
-
 };
 
 /**
@@ -66,24 +64,24 @@ const transformGreyscale = (bmp) => {
   bitmap.newFile = bitmap.file.replace(/\.bmp/, `.${operation}.bmp`);
   console.log('Transforming bitmap into greyscale', bmp);
 
-  let pictureData = bitmap.buffer;
+  let pictureData = bmp.buffer;
   console.log(pictureData.length);
   console.log(pictureData[1275]);
 
   //greyscale picture
-  for(let i = 0; i < pictureData.length ; i += 8)  {      
+  for(let i = 0; i < pictureData.length ; i += 3)  {      
     let avg = (pictureData[i] + pictureData[i+1] + pictureData[i+2])/3;
     pictureData[i] = avg;
     pictureData[i+1] = avg;
     pictureData[i+2] = avg;
   }
 
- // for(let i = 0; i < pictureData.length; i += 3);
+  // for(let i = 0; i < pictureData.length; i += 3);
   //pictureData[i] = 
 
   console.log(pictureData[1275]);
-  let newPic = bitmap.headers + pictureData;
-  fs.writeFile(bitmap.newFile, newPic, (err, out) => {
+  //let newPic = bitmap.headers + pictureData;
+  fs.writeFile(bitmap.newFile, bmp.buffer, (err) => {
     if (err) {
       throw err;
     }
@@ -92,8 +90,7 @@ const transformGreyscale = (bmp) => {
 };
   //TODONE: Figure out a way to validate that the bmp instance is actually valid before trying to transform it
 
-  //TODO: alter bmp to make the image greyscale ...
-
+//TODO: alter bmp to make the image greyscale ...
 
 
 const transformNegative = (bmp) => {
@@ -101,7 +98,7 @@ const transformNegative = (bmp) => {
   bitmap.newFile = bitmap.file.replace(/\.bmp/, `.${operation}.bmp`);
   console.log('Transforming bitmap into an inverse color image', bmp);
 
-  let pictureData = bitmap.buffer;
+  let pictureData = bmp.buffer;
   console.log(pictureData.length);
   console.log(pictureData[1275]);
 
@@ -109,25 +106,27 @@ const transformNegative = (bmp) => {
   for(let i = 0; i < 125; i++) {
     for(let j = 0; j < 112; j++){
       if(j<110) {
-        pictureData[(i*112)+j] = 255 - pictureData[(i*112)+j];
+        if(pictureData[(i*112)+j] != 0) {
+          pictureData[(i*112)+j] = 255 - pictureData[(i*112)+j];
+        }
       }
     }
   }
 
-    //invert picture
-   // for(let i=0; i<pictureData.length; i++) {
-        //pictureData[i] = 255 - pictureData[i];
-    //}
+  //invert picture
+  // for(let i=0; i<pictureData.length; i++) {
+  //pictureData[i] = 255 - pictureData[i];
+  //}
     
    
 
-    console.log(pictureData[1275]);
-    let newPic = bitmap.headers + pictureData;
-    fs.writeFile(bitmap.newFile, newPic, (err, out) => {
-      if (err) {
-        throw err;
-      }
-      console.log(`Bitmap Transformed: ${bitmap.newFile}`);
+  console.log(pictureData[1275]);
+  //let newPic = bitmap.header + pictureData
+  fs.writeFile(bitmap.newFile, bmp.buffer, (err) => {
+    if (err) {
+      throw err;
+    }
+    console.log(`Bitmap Transformed: ${bitmap.newFile}`);
   });
 };
 
@@ -140,7 +139,8 @@ const transformNegative = (bmp) => {
  */
 const transforms = {
   greyscale: transformGreyscale,
-  negative: transformNegative
+  jaundice: transformJaundice,
+  starTrek: transformStarTrek,
 
 };
 
@@ -158,7 +158,7 @@ function transformWithCallbacks() {
     bitmap.transform(operation);
 
     // Note that this has to be nested!
-    // Also, it uses the bitmap's instance properties for the name and thew new buffer
+    // Also, it uses the bitmap's instance properties for the name and the new buffer
     
 
   });
